@@ -1,16 +1,33 @@
 \documentclass{cernrep}
+\usepackage{hyperref}
 \begin{document}
 \title{PF hadron calibration}
 \author{Changgi Huh}
 \institute{Kyungpook National University, Republic of Korea}
 
 \maketitle
+\section{Procedure of PF Hadron Calibration}
 
-Code description of PF hadron calibration.
-Running with "root calibChris.C"
+It is the procedure after the ntuple production. 
+\begin{itemize}
+    \item Run the calibChris.C ("root calibChris.C") without any fix.
+    \item The coefficient root files are generated.
+    \item Fit the histogram in the energy correction coefficient separately(EH ABC, H ABC in each barrel and endcap).  
+    \item Put the fit results to the calibChris.C
+    \item Rerun the calibChris.C ("root calibChris.C"). The energy correction is applied. 
+    \item Fit the histogram in the energy correction coefficient separately(EH Alpha, H Beta, H Alpha, H Beta in each barrel and endcap).
+    \item Put the fit results to the calibChris.C
+    \item Rerun the calibChris.C ("root calibChris.C"). The eta and energy correction is applied. 
+\end{itemize}
 
-\section{functions}
+.db file creation method is written in \href{https://twiki.cern.ch/twiki/bin/viewauth/CMS/PFCalibrationDBConditions#How_to_write_create_payload}{twiki}. When you generate .db file, you must put your fit results to ProducePFCalibration.py.
 
+
+
+
+\section{functions of calibChris}
+
+Code description of PF hadron calibration. Running with "root calibChris.C" \\
 The main function of this code is calibChris(). Inside of calibChris(), some functions and classes are used. The function list is 
 \begin{itemize}
 \item InitBarrelAlpha()
@@ -33,7 +50,7 @@ The class list is
 
 Inside of two classes, several functions are exist. The lists are in the Figure \ref{ABC} and Figure \ref{AlphaBeta}. Detail descriptions are written in below.
 
-\begin{figure}[ht]
+\begin{figure}[!]
 %\begin{center}
 \includegraphics[width=1.0\textwidth]{fig/ABC.png}
 \caption{functions in ABC class}
@@ -41,7 +58,7 @@ Inside of two classes, several functions are exist. The lists are in the Figure 
 %\end{center}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[!]
 %\begin{center}
 \includegraphics[width=1.0\textwidth]{fig/AlphaBeta.png}
 \caption{functions in AlphaBeta class}
@@ -83,7 +100,7 @@ This is unused function.
 
 Draw eta dependent plot. It is Figure \ref{EtaDependent}.
 
-\begin{figure}[ht]
+\begin{figure}[!]
 %\begin{center}
 \includegraphics[width=1.0\textwidth]{fig/corrEtaDependenceEH_JME_GT_sample.png}
 \caption{eta dependent response result.}
@@ -104,111 +121,111 @@ To calibrate energy, made two different classes, ABC and AlphaBeta. ABC is energ
 
 ABC is energy dependent calibration.
 
-\subsubsubsection{construct class}
+\subparagraph{construct class}
 
 When ABC class is constructed, lower and upper energy bin edge and barrel check parameter is inputted. Eta fit range is determined.
 
-\subsubsubsection{addEntry}
+\subparagraph{addEntry}
 
 If values are satisfied the selection, true energy, stored energy in ECAL and HCAL, eta and sigmaEcalHcal are saved in vectors. Those are used when calculate calibration constant.
 
-\subsubsubsection{getBinLowEdge}
+\subparagraph{getBinLowEdge}
 
 This is unused function.
 
-\subsubsubsection{getBinHighEdge}
+\subparagraph{getBinHighEdge}
 
 This is unused function.
 
-\subsubsubsection{isBarrel}
+\subparagraph{isBarrel}
 
 This is unused function.
 
-\subsubsubsection{isEmpty}
+\subparagraph{isEmpty}
 
 If true energy value is exist, it return true.
 
-\subsubsubsection{isEmptyInFitRange}
+\subparagraph{isEmptyInFitRange}
 
 If eta is satisfied eta selection, it return true.
 
-\subsubsubsection{getSize}
+\subparagraph{getSize}
 
 It returns size of true energy.
 
-\subsubsubsection{getETrueAverage}
+\subparagraph{getETrueAverage}
 
 It returns average of true energy.
 
-\subsubsubsection{getETrueRMS}
+\subparagraph{getETrueRMS}
 
 It returns RMS of true energy.
 
-\subsubsubsection{getA}
+\subparagraph{getA}
 
 It return threshold. 3.5 GeV for EH hadron, 2.5 GeV for H hadron.
 
-\subsubsubsection{getB}
+\subparagraph{getB}
 
 It returns calibration constant A for EH hadrons.
 
-\subsubsubsection{getC}
+\subparagraph{getC}
 
 It returns calibration constant B for EH hadrons.
 
-\subsubsubsection{getSigmaB}
+\subparagraph{getSigmaB}
 
 It returns sigma of calibration constant A for EH hadrons.
 
-\subsubsubsection{getSigmaC}
+\subparagraph{getSigmaC}
 
 It returns sigma of calibration constant B for EH hadrons.
 
-\subsubsubsection{getETrue}
+\subparagraph{getETrue}
 
 It returns true energy.
 
-\subsubsubsection{getEcal}
+\subparagraph{getEcal}
 
 It returns measured energy in ECAL.
 
-\subsubsubsection{getHcal}
+\subparagraph{getHcal}
 
 It returns measured energy in HCAL.
 
-\subsubsubsection{getEta}
+\subparagraph{getEta}
 
 It returns eta.
 
-\subsubsubsection{getNEntries}
+\subparagraph{getNEntries}
 
 It returns size of true energies.
 
-\subsubsubsection{computeETrueAverage}
+\subparagraph{computeETrueAverage}
 
 Calculate average of true energy.
 
-\subsubsubsection{computeETrueRMS}
+\subparagraph{computeETrueRMS}
 
 Calculate RMS of true energy.
 
-\subsubsubsection{computeA}
+\subparagraph{computeA}
 
 It return threshold. 3.5 GeV for EH hadron, 2.5 GeV for H hadron.
 
-\subsubsubsection{computeB}
+\subparagraph{computeB}
 
 Calculate energy calibration constant A and sigma of A for EH hadrons.
 
-\subsubsubsection{computeC}
+\subparagraph{computeC}
 
 Calculate energy calibration constant B and sigma of B for EH hadrons.
 
-\subsubsubsection{computeBC}
+\subparagraph{computeBC}
 
 Calculate energy calibration constant C and sigma of C for H hadrons.
 
-\subsubsubsection{clear}
+\subparagraph{clear}
 
 Delete values.
 
@@ -216,111 +233,111 @@ Delete values.
 
 AlphaBeta is eta dependent calibration.
 
-\subsubsubsection{construct class}
+\subparagraph{construct class}
 
 When AlphaBeta class is constructed, lower and upper energy bin edge and barrel check parameter is inputted. Eta fit range is determined.
 
-\subsubsubsection{addEntry}
+\subparagraph{addEntry}
 
 If values are satisfied the selection, true energy, stored energy in ECAL and HCAL, eta and threshold are saved in vectors. Those are used when calculate calibration constant.
 
-\subsubsubsection{getBinLowEdge}
+\subparagraph{getBinLowEdge}
 
 This is unused function.
 
-\subsubsubsection{getBinHighEdge}
+\subparagraph{getBinHighEdge}
 
 This is unused function.
 
-\subsubsubsection{isBarrel}
+\subparagraph{isBarrel}
 
 This is unused function.
 
-\subsubsubsection{isEmpty}
+\subparagraph{isEmpty}
 
 If true energy value is exist, it return true.
 
-\subsubsubsection{isEmptyInFitRange}
+\subparagraph{isEmptyInFitRange}
 
 If eta is satisfied eta selection, it return true.
 
-\subsubsubsection{getSize}
+\subparagraph{getSize}
 
 It returns size of true energy.
 
-\subsubsubsection{getETrue}
+\subparagraph{getETrue}
 
 It returns true energy.
 
-\subsubsubsection{getEcal}
+\subparagraph{getEcal}
 
 It returns measured energy in ECAL.
 
-\subsubsubsection{getHcal}
+\subparagraph{getHcal}
 
 It returns measured energy in HCAL.
 
-\subsubsubsection{getETrueAverage}
+\subparagraph{getETrueAverage}
 
 It returns average of true energy.
 
-\subsubsubsection{getETrueRMS}
+\subparagraph{getETrueRMS}
 
 It returns RMS of true energy.
 
-\subsubsubsection{getAlpha}
+\subparagraph{getAlpha}
 
 It returns calibration constant Alpha.
 
-\subsubsubsection{getBeta}
+\subparagraph{getBeta}
 
 It returns calibration constant Beta.
 
-\subsubsubsection{getGamma}
+\subparagraph{getGamma}
 
 It returns calibration constant Gamma. This is unused function.
 
-\subsubsubsection{getSigmaAlpha}
+\subparagraph{getSigmaAlpha}
 
 It returns sigma of calibration constant Alpha.
 
-\subsubsubsection{getSigmaBeta}
+\subparagraph{getSigmaBeta}
 
 It returns sigma of calibration constant Beta.
 
-\subsubsubsection{getSigmaGamma}
+\subparagraph{getSigmaGamma}
 
 It returns sigma of calibration constant Gamma. This is unused function.
 
-\subsubsubsection{correctEcal}
+\subparagraph{correctEcal}
 
 It correct measured energy in ECAL using calibration constant.
 
-\subsubsubsection{correctHcal}
+\subparagraph{correctHcal}
 
 It correct measured energy in HCAL using calibration constant.
 
-\subsubsubsection{computeSigmaEcalHcal}
+\subparagraph{computeSigmaEcalHcal}
 
 It compute sigma of correct measured energy in HCAL using calibration constant.
 
-\subsubsubsection{computeETrueAverage}
+\subparagraph{computeETrueAverage}
 
 Calculate average of true energy.
 
-\subsubsubsection{computeETrueRMS}
+\subparagraph{computeETrueRMS}
 
 Calculate RMS of true energy.
 
-\subsubsubsection{computeAlphaBeta}
+\subparagraph{computeAlphaBeta}
 
 Calculate eta dependent calibration constant Alpha and Beta.
 
-\subsubsubsection{computeAlphaBetaGamma}
+\subparagraph{computeAlphaBetaGamma}
 
 This is unused function.
 
-\subsubsubsection{clear}
+\subparagraph{clear}
 
 Delete values.
 
